@@ -1,0 +1,39 @@
+
+Haskell Types and Typeclasses
+
+1) Types
+
+   "A type is a kind of label that every expression has. It tells us in which category of things that expression fits."
+
+1.1) Common Haskell Types
+
+     Int : bounded integers
+     Integer : unbounded integers
+     Float : single precision float point number
+     Double : double precision float point number
+     Bool : boolean values
+     Char: a single character
+     [t] : list, which concrete type is a list of its component t type. For instance: [Char], a list of characters.
+     (t, t1, ...) : tuple, which concrete type is either: an empty tuple type (); or a tuple type of its component t type, as (t) tuple type, also as the simply t type; or a tuple type of its t, t1 types, as (t, t1) tuple type; and so on. Theoretically, there is infinite tuple types.
+
+2) Type Variables
+
+   As stated in non-capital case parameter names, type variables are generics variables types, which allow themselves to be of any type. Type variables are allowed if its implementation do not use either specific concrete type or typeclass behaviors. Otherwise, it must use an overloaded type definition, that we'll see later on. Note: functions with type variables are known as polymorphic functions.
+
+3) Typeclasses
+
+   "A typeclass is a sort of interface that defines some behavior. If a type is a part of a typeclass, that means that it supports and implements the behavior the typeclass describes". We can use typeclasses in function type definitions, as well in polymorphic function applications, by the way of type annotations plus the class constraints (i.e., the typeclass specifications).
+
+3.1) Some Basic Haskell Typeclasses
+
+     Eq : "used for types that support equality testing";
+     Ord : "for types that have an ordering";
+     Show : types whose values can be presented as strings;
+     Read : for types that from its corresponding string values such that they can be returned in their original type values;
+     Enum : for types whose values are sequentially ordered;
+     Bounded : "members have an upper and a lower bound";
+     Num : "its members have the property of being able to act like numbers";
+     Integral : "includes only integral (whole) numbers";
+     Floating : " includes only floating point numbers".
+
+
