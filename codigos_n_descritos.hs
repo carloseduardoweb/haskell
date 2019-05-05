@@ -44,7 +44,7 @@ gapsFromCods cods = treeToCods $ mapTreeToGaps $ codsToTree cods
 
 codsToTree :: [Cod] -> Tree
 codsToTree [] = []
-codsToTree cods = [[seq' | seq' <- groupBySequence unit] | unit <- groupByUnit cods]
+codsToTree cods = [[seq2 | seq2 <- groupBySequence seq1] | seq1 <- groupByUnit cods]
 
 treeToCods :: Tree -> [Cod]
 treeToCods tree = concat $ concat tree
