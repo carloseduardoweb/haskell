@@ -1,5 +1,6 @@
 -- Use -fno-full-laziness compiler flag to optimise list comprehension performance.
 
+import System.Environment
 import Prelude
 import Data.List
 
@@ -93,3 +94,25 @@ formatCod (l1, l2, l3) (unit, seq', ext) =  leadingZero l1 unit ++ "/" ++
 
 formatCods :: CodFormat -> [Cod] -> [String]
 formatCods fmt = map (formatCod fmt)
+
+-- For tests
+main :: IO ()
+main = do
+  args <- getArgs  
+  if length args < 2 
+    then error "Error: too few arguments!"
+    else
+      if length args > 3
+        then error "Erro: too many arguments!"
+        else
+          if length args == 2
+            then
+              putStrLn 
+              $ intercalate "; "
+              $ formatCods (read (args !! 0) :: CodFormat)
+              $ gapsFromCods $ (read (args !! 1) :: [Cod])
+            else -- length args == 3
+            putStrLn 
+            $ intercalate (read (args !! 0) :: [Char])
+            $ formatCods (read (args !! 1) :: CodFormat)
+            $ gapsFromCods $ (read (args !! 2) :: [Cod])
