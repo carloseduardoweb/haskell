@@ -64,10 +64,10 @@ mapTreeToExtGaps = map (\unit -> mapUnitToExtGaps unit)
 mapUnitToExtGaps :: Unit -> Unit
 mapUnitToExtGaps = map (\seq' -> [(u, s, e) | e <- gaps $ listExt seq', let (u, s, _) = head seq'])
 
-groupByUnit :: [Cod] -> [[Cod]]
+groupByUnit :: [Cod] -> Unit
 groupByUnit = groupBy (\(u1, _, _) (u2, _, _) -> u1 == u2)
 
-groupBySequence :: [Cod] -> [[Cod]]
+groupBySequence :: [Cod] -> Unit
 groupBySequence = groupBy (\(_, s1, _) (_, s2, _) -> s1 == s2)
 
 listSeq :: Unit -> [Int]
