@@ -17,18 +17,17 @@ public class CodigosNaoDescritos
 {
   public static void Main(string[] args)
   {
+    List<Cod> cods = new List<Cod> {(1,2,3),(1,2,5),(2,3,4),(3,1,4),(3,1,6),(3,3,5),(3,5,0),(3,5,3)};
+
     CodigosNaoDescritos cnd = new CodigosNaoDescritos();
-
-    List<int> nums = new List<int> {2,3,7,9};
-    List<int> gaps1 = cnd.Gaps(nums);
-    Console.WriteLine(String.Join(",", gaps1));
-
-    List<Cod> cods = new List<Cod> {(1,2,3), (1,1,2), (3,2,3)};
-    cnd.SortCods(cods);
+    cnd.SortCods(cods); // se estiverem ordenados, não precisará
+    List<Cod> gaps = cnd.GapsFromCods(cods);
+    
     Console.WriteLine(String.Join(",", cods));
-
-    List<Cod> gaps2 = cnd.GapsFromCods(cods);
-    Console.WriteLine(String.Join(",", gaps2));
+    Console.WriteLine(String.Join(",", cnd.FormatCods((2,6,3), cods)));
+    
+    Console.WriteLine(String.Join(",", gaps));
+    Console.WriteLine(String.Join(",", cnd.FormatCods((2,6,3), gaps)));
   }
 
   private List<int> Gaps(List<int> nums)
@@ -95,10 +94,9 @@ public class CodigosNaoDescritos
     unit.Sort((Seq seq1, Seq seq2) => CompareSeq(seq1, seq2));
   }
 
-  // todo
-  public List<String> GapsFromCods(CodFormat fmt, List<String> cods)
-  {    
-    return null;
+  public List<String> GapsFromCods(CodFormat fmt, List<String> strCods)
+  {
+    return FormatCods(fmt, GapsFromCods(MapList(strCods, (string strCod) => StringToCod(strCod?.Trim()))));
   }
 
   public List<Cod> GapsFromCods(List<Cod> cods)
@@ -215,6 +213,36 @@ public class CodigosNaoDescritos
     }
 
     return cods;
+  }
+
+  public string FormatCod(CodFormat fmt, Cod cod)
+  {
+    return String.Format("{0}/{1}{2}", cod.Item1.ToString($"D{fmt.Item1}")
+                                    , cod.Item2.ToString($"D{fmt.Item2}")
+                                    , (cod.Item3 == 0 ? "" : "-" + cod.Item3.ToString($"D{fmt.Item3}")));
+  }
+
+  public List<string> FormatCods(CodFormat fmt, List<Cod> cods)
+  {
+    return MapList(cods, (Cod cod) => FormatCod(fmt, cod));
+  }
+
+  public Cod StringToCod(string strCod)
+  {
+    string[] split = strCod?.Split(new Char [] {'/', '-'});
+    int[] values = new int[] {0,0,0};
+
+    for (int i = 0; i < (split?.Length ?? 0); i++)
+    {
+      values[i] = int.Parse(split[i]);
+    }
+
+    return (values[0], values[1], values[2]);
+  }
+
+  public List<Cod> StringsToCods(List<String> strCods)
+  {
+    return MapList(strCods, (string strCod) => StringToCod(strCod));
   }
 }
 
